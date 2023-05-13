@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-
 // 초기 상태값
 const initialState = {
   // key: value,
@@ -10,12 +9,13 @@ const fairyTaleSlice = createSlice({
   name: "fairyTale",
   initialState: {},
   reducers: {
-    // addNumber: (state, action) => {
+    // 액션명: (state, action) => {
     //   state.number = state.number + action.payload;
+    //   수행할 명령
     // },
-
-    // minusNumber: (state, action) => {
+    // 액션명2: (state, action) => {
     //   state.number = state.number - action.payload;
+    //   수행할 명령
     // },
   },
 });
