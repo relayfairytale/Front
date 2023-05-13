@@ -1,9 +1,13 @@
-import React from 'react'
+import React from "react";
+import Layout from "../Components/Layout/Layout";
+import MainPage from "../Components/Layout/MainPage/MainPage"
 
 function Home() {
   return (
-    <div>Home</div>
-  )
+      <Layout>
+        <MainPage/>
+      </Layout>
+  );
 }
 
-export default Home
+export default Home;
