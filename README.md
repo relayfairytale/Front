@@ -1,70 +1,23 @@
-# Getting Started with Create React App
+# Front Memo
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 페이지 
+### 메인 페이지
+- 새 릴레이 동화 추가 (모달) 
+  - 제목 인풋, 첫문장 인풋, 이미지 url 인풋, 저장 버튼 
 
-## Available Scripts
 
-In the project directory, you can run:
-
-### `yarn start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `yarn test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### 상세 페이지 
+- 메인 페이지로 돌아갈 버튼
+- 완결 여부 체크
+- 제목
+- 릴레이되는 내용 
+  - 모달? 작성자, 추천 버튼(count), 비추 버튼(count)
+- 제가 써볼게요 버튼 
+  - 글이 완결 상태일 경우 비활성화
+  - 활성화 상태일때 버튼을 누르면 서버로 작성 중 상태 bool 값 전달
+  - 버튼을 누른 후 5분 동안 저장하지 않으면 상태를 초기화 하고 화면을 리랜더링시킴
+  - 버튼 클릭시 입력 화면 밑으로 표시되도록 함
+- 입력 기능
+  - 텍스트 인풋 글자수 제한 최소 글자수, 최대 글자수 제한 
+  - 저장 버튼 
+    - 저장 버튼 클릭시 작성 중 상태를 초기화 시키고 입력한 데이터를 서버에 저장함
