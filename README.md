@@ -1,5 +1,9 @@
 # Front Memo
 
+## 초기 와이어 프레임
+
+![](https://overjoyed-capacity-5a6.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F87c68b2e-0ee1-47d4-9a8b-66cc2cf19fc1%2Fdiagram-export-2023._5._13._%25EC%2598%25A4%25EC%25A0%2584_1_22_16_(%25EC%25A4%2591%25ED%2598%2595).png?id=f9991558-5a97-4bf0-a67b-d4dddb994d0a&table=block&spaceId=0ba460f2-75de-4aae-bdff-167ae7875c65&width=2000&userId=&cache=v2)
+
 ## 페이지 
 ### 메인 페이지
 - 새 릴레이 동화 추가 (모달) 
