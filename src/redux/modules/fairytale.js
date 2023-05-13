@@ -1,12 +1,26 @@
-// 초기 상태값
-const initialState = {};
+import { createSlice } from "@reduxjs/toolkit";
 
-// 리듀서
-const fairyfale = (state = initialState, action) => {
-  switch (action.type) {
-    default:
-      return state;
-  }
+
+// 초기 상태값
+const initialState = {
+  // key: value,
 };
 
-export default fairyfale;
+const fairyTaleSlice = createSlice({
+  name: "fairyTale",
+  initialState: {},
+  reducers: {
+    // addNumber: (state, action) => {
+    //   state.number = state.number + action.payload;
+    // },
+
+    // minusNumber: (state, action) => {
+    //   state.number = state.number - action.payload;
+    // },
+  },
+});
+
+// 액션크리에이터는 컴포넌트에서 사용하기 위해 export 하고
+export const { /* addNumber, minusNumber */ } = fairyTaleSlice.actions;
+// reducer 는 configStore에 등록하기 위해 export default 합니다.
+export default fairyTaleSlice.reducer;
