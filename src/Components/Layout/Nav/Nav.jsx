@@ -4,7 +4,7 @@ import { styled } from "styled-components";
 function Nav() {
   return (
     <StNavBar>
-      <Link to={"signup"}>
+      <Link to={"/signup"}>
         <button>회원가입</button>
       </Link>
 
