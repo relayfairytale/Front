@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { styled } from "styled-components";
+import styled from "styled-components";
 
 // 닉네임 정규식
 const nicknameRegex = /^[A-Za-z0-9]{3,}$/;
@@ -8,80 +8,140 @@ const nicknameRegex = /^[A-Za-z0-9]{3,}$/;
 const passwordRegex = /^.{4,}$/;
 // 오류 메세지
 const alertMessage = {
-  nickErr: "닉네임 규칙에 어긋납니다!!(영문과 숫자를 사용하여 3글자 이상)",
+  nickErr: "닉네임 규칙에 어긋납니다! (영문과 숫자를 사용하여 3글자 이상)",
   pwErr: "비밀번호 규칙에 어긋납니다!!(4글자 이상)",
   pwMachErr: "패스워드가 불일치합니다.",
 };
 
-let [nick, pw, cofimpw] = [true, true, true];
-
 function Signup() {
-  const [nickName, setNickName] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-
-  console.log(`nick : ${nick}, pw : ${pw}, cofimpw : ${cofimpw}`);
+  const [nickName, setNickName] = useState({
+    value: "",
+    err: null,
+  });
+  const [password, setPassword] = useState({
+    value: "",
+    err: null,
+  });
+  const [confirmPassword, setConfirmPassword] = useState({
+    value: "",
+    err: null,
+  });
 
   const onNickNameChangeHandler = (event) => {
     const inputNickName = event.target.value;
-    setNickName(inputNickName);
+    setNickName((prevNickName) => ({
+      ...prevNickName,
+      value: inputNickName,
+    }));
   };
 
   const onPasswordChangeHandler = (event) => {
     const inputPassword = event.target.value;
-    setPassword(inputPassword);
+    setPassword((prevPassword) => ({
+      ...prevPassword,
+      value: inputPassword,
+    }));
   };
 
   const onConfirmPasswordChangeHandler = (event) => {
     const inputConfirmPassword = event.target.value;
-    setConfirmPassword(inputConfirmPassword);
+    setConfirmPassword((prevConfimPw) => ({
+      ...prevConfimPw,
+      value: inputConfirmPassword,
+    }));
+  };
+
+  // 비밀번호 일치 여부 검사
+  const isPwMach = password.value === confirmPassword.value;
+
+  const verifySiginUpData = () => {
+    // 닉네임 유효성 검사
+    if (!nicknameRegex.test(nickName.value)) {
+      setNickName((prevNickName) => ({
+        ...prevNickName,
+        err: true,
+      }));
+    } else {
+      setNickName((prevNickName) => ({
+        ...prevNickName,
+        err: false,
+      }));
+    }
+    // 비밀번호 유효성 검사
+    if (!passwordRegex.test(password.value)) {
+      setPassword((prevPassword) => ({
+        ...prevPassword,
+        err: true,
+      }));
+    } else {
+      setPassword((prevPassword) => ({
+        ...prevPassword,
+        err: false,
+      }));
+    }
+    // 비밀번호 재입력 일치 여부 검사
+    if (!isPwMach) {
+      setConfirmPassword((prevConfimPw) => ({
+        ...prevConfimPw,
+        err: true,
+      }));
+    } else {
+      setConfirmPassword((prevConfimPw) => ({
+        ...prevConfimPw,
+        err: false,
+      }));
+    }
+
+    console.log(nickName.err)
+    console.log(password.err)
+    console.log(confirmPassword.err)
+    if (!nickName.err && !password.err && !confirmPassword.err) {
+      return true;
+    } else {
+      return false;
+    }
   };
 
   const onSubmitHandler = () => {
-    // 비밀번호 일치 여부 검사
-    const isPwMach = password === confirmPassword;
-
-    // 닉네임 유효성 검사
-    if (!nicknameRegex.test(nickName)) {
-      nick = false;
-    }
-    // 비밀번호 유효성 검사
-    if (!passwordRegex.test(password)) {
-      pw = false;
-    }
-
-    if (isPwMach) {
-      cofimpw = true;
-    } else {
-      cofimpw = false;
-    }
+    const signUpVerfy = verifySiginUpData();
+    
+    
+    
+    console.log(signUpVerfy ? "가능" : "불가능");
   };
 
   return (
     <StSignupContainer>
       <h1>회원가입</h1>
-      <label>닉네임 : </label>
+      <label>
+        닉네임 :
+        <StAlertBox>{nickName.err ? alertMessage.nickErr : null}</StAlertBox>
+      </label>
       <input
         type="text"
         placeholder="My Nickname"
         onChange={onNickNameChangeHandler}
       />
-      {nick ? null : nickName ? alertMessage.nickErr : "값이 비어 있어요"}
-
-      <label>비밀번호 : </label>
+      <label>
+        비밀번호 :
+        <StAlertBox>{password.err ? alertMessage.pwErr : null}</StAlertBox>
+      </label>
       <input
         type="text"
         placeholder="Password"
         onChange={onPasswordChangeHandler}
       />
-      {pw ? null : password ? alertMessage.pwErr : "값이 비어 있어요"}
-      <label>비밀번호 재입력 : </label>
+      <label>
+        비밀번호 재입력 :
+        <StAlertBox>
+          {confirmPassword.err ? alertMessage.pwMachErr : null}
+        </StAlertBox>
+      </label>
       <input
         type="text"
         placeholder="Confirm Password"
         onChange={onConfirmPasswordChangeHandler}
       />
-      {"3333"}
       <div>
         <StBtn onClick={onSubmitHandler}>회원가입</StBtn>
         <Link to={"/"}>
@@ -109,4 +169,9 @@ const StSignupContainer = styled.div`
 
 const StBtn = styled.button`
   margin: 5px;
+`;
+
+const StAlertBox = styled.div`
+  color: tomato;
+  font-weight: bold;
 `;
