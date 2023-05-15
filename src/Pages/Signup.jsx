@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import axios from "axios";
 
 // 닉네임 정규식
 const nicknameRegex = /^[A-Za-z0-9]{3,}$/;
@@ -77,8 +78,24 @@ function Signup() {
   };
   const onSubmitHandler = () => {
     const signUpVerfy = verifySiginUpData();
-    if (signUpVerfy) {
-      console.log(signUpVerfy ? '가능' : '불가능');
+    if (signUpVerfy) {  // 회원 가입 요청 가능
+
+      // axios
+      //   .post(
+      //     "/signup", // 미리 약속한 주소
+      //     { nickname: nickname, password: password }, // 서버가 필요로 하는 데이터를 넘겨주고,
+      //     { headers: { Authorization: "내 토큰 보내주기" } } // 누가 요청했는 지 알려줍니다. (config에서 해요!)
+      //   )
+      //   .then(function (response) {
+      //     console.log(response);
+      //   })
+      //   .catch(function (error) {
+      //     console.log(error);
+      //   });
+
+      return;
+    } else {
+      // 회원가입 부적합으로 함수 종료
       return;
     }
   };
@@ -116,7 +133,7 @@ function Signup() {
       />
       <div>
         <StBtn onClick={onSubmitHandler}>회원가입</StBtn>
-        <Link to={'/'}>
+        <Link to={"/"}>
           <StBtn>취소</StBtn>
         </Link>
       </div>
