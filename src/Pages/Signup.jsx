@@ -52,12 +52,12 @@ function Signup() {
     }));
   };
 
-  // 비밀번호 일치 여부 검사
   const verifySiginUpData = () => {
-    // 닉네임 유효성 검사
+    // 유효성 검사 결과 저장
     const verifiedNickname = nicknameRegex.test(nickName.value);
     const verifiedPassword = passwordRegex.test(password.value);
     const verifiedConfirmPassword = password.value === confirmPassword.value;
+    
     setNickName((prevNickName) => ({
       ...prevNickName,
       err: !verifiedNickname,
@@ -116,7 +116,7 @@ function Signup() {
         <StAlertBox>{password.err ? alertMessage.pwErr : null}</StAlertBox>
       </label>
       <input
-        type="text"
+        type="password"
         placeholder="Password"
         onChange={onPasswordChangeHandler}
       />
@@ -127,7 +127,7 @@ function Signup() {
         </StAlertBox>
       </label>
       <input
-        type="text"
+        type="password"
         placeholder="Confirm Password"
         onChange={onConfirmPasswordChangeHandler}
       />
