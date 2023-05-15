@@ -52,64 +52,36 @@ function Signup() {
   };
 
   // 비밀번호 일치 여부 검사
-  const isPwMach = password.value === confirmPassword.value;
-
   const verifySiginUpData = () => {
     // 닉네임 유효성 검사
-    if (!nicknameRegex.test(nickName.value)) {
-      setNickName((prevNickName) => ({
-        ...prevNickName,
-        err: true,
-      }));
-    } else {
-      setNickName((prevNickName) => ({
-        ...prevNickName,
-        err: false,
-      }));
-    }
+    const verifiedNickname = nicknameRegex.test(nickName.value);
+    const verifiedPassword = passwordRegex.test(password.value);
+    const verifiedConfirmPassword = password.value === confirmPassword.value;
+    setNickName((prevNickName) => ({
+      ...prevNickName,
+      err: !verifiedNickname,
+    }));
     // 비밀번호 유효성 검사
-    if (!passwordRegex.test(password.value)) {
-      setPassword((prevPassword) => ({
-        ...prevPassword,
-        err: true,
-      }));
-    } else {
-      setPassword((prevPassword) => ({
-        ...prevPassword,
-        err: false,
-      }));
-    }
+    setPassword((prevPassword) => ({
+      ...prevPassword,
+      err: !verifiedPassword,
+    }));
     // 비밀번호 재입력 일치 여부 검사
-    if (!isPwMach) {
-      setConfirmPassword((prevConfimPw) => ({
-        ...prevConfimPw,
-        err: true,
-      }));
-    } else {
-      setConfirmPassword((prevConfimPw) => ({
-        ...prevConfimPw,
-        err: false,
-      }));
-    }
-
-    console.log(nickName.err)
-    console.log(password.err)
-    console.log(confirmPassword.err)
-    if (!nickName.err && !password.err && !confirmPassword.err) {
-      return true;
-    } else {
-      return false;
-    }
+    setConfirmPassword((prevConfimPw) => ({
+      ...prevConfimPw,
+      err: !verifiedConfirmPassword,
+    }));
+    return !verifiedNickname || !verifiedPassword || !verifiedConfirmPassword
+      ? false
+      : true;
   };
-
   const onSubmitHandler = () => {
     const signUpVerfy = verifySiginUpData();
-    
-    
-    
-    console.log(signUpVerfy ? "가능" : "불가능");
+    if (signUpVerfy) {
+      console.log(signUpVerfy ? '가능' : '불가능');
+      return;
+    }
   };
-
   return (
     <StSignupContainer>
       <h1>회원가입</h1>
@@ -144,33 +116,27 @@ function Signup() {
       />
       <div>
         <StBtn onClick={onSubmitHandler}>회원가입</StBtn>
-        <Link to={"/"}>
+        <Link to={'/'}>
           <StBtn>취소</StBtn>
         </Link>
       </div>
     </StSignupContainer>
   );
 }
-
 export default Signup;
-
 const StSignupContainer = styled.div`
   max-width: 1200px;
   margin: 15px auto;
   padding: 20px;
-
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
   flex-direction: column;
-
   border: 3px solid black;
 `;
-
 const StBtn = styled.button`
   margin: 5px;
 `;
-
 const StAlertBox = styled.div`
   color: tomato;
   font-weight: bold;
