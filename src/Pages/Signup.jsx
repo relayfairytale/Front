@@ -80,18 +80,18 @@ function Signup() {
     const signUpVerfy = verifySiginUpData();
     if (signUpVerfy) {  // 회원 가입 요청 가능
 
-      // axios
-      //   .post(
-      //     "/signup", // 미리 약속한 주소
-      //     { nickname: nickname, password: password }, // 서버가 필요로 하는 데이터를 넘겨주고,
-      //     { headers: { Authorization: "내 토큰 보내주기" } } // 누가 요청했는 지 알려줍니다. (config에서 해요!)
-      //   )
-      //   .then(function (response) {
-      //     console.log(response);
-      //   })
-      //   .catch(function (error) {
-      //     console.log(error);
-      //   });
+      axios
+        .post(
+          "http://miniproject.ap-northeast-2.elasticbeanstalk.com/signup", // 미리 약속한 주소
+          { nickname:nickName.value, password:password.value }, // 서버가 필요로 하는 데이터를 넘겨주고,
+          { headers: {} } // 누가 요청했는 지 알려줍니다. (config에서 해요!)
+        )
+        .then(function (response) {
+          console.log("res=>",response);
+        })
+        .catch(function (error) {
+          console.log("err=>",error);
+        });
 
       return;
     } else {
