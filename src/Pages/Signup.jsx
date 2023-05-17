@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import axios from "axios";
+import {AuthApi} from '../shared/Api'
 
 // 닉네임 정규식
 const nicknameRegex = /^[A-Za-z0-9]{3,}$/;
@@ -76,22 +76,29 @@ function Signup() {
       ? false
       : true;
   };
-  const onSubmitHandler = () => {
+  const onSubmitHandler = async() => {
     const signUpVerfy = verifySiginUpData();
     if (signUpVerfy) {  // 회원 가입 요청 가능
 
-      axios
-        .post(
-          "http://miniproject.ap-northeast-2.elasticbeanstalk.com/signup", // 미리 약속한 주소
-          { nickname:nickName.value, password:password.value }, // 서버가 필요로 하는 데이터를 넘겨주고,
-          { headers: {} } // 누가 요청했는 지 알려줍니다. (config에서 해요!)
-        )
-        .then(function (response) {
-          console.log("res=>",response);
-        })
-        .catch(function (error) {
-          console.log("err=>",error);
-        });
+      try {
+        const res = await AuthApi.signup({nickname:nickName.value, password:password.value})
+        console.log(res)  
+      } catch (err) {
+        console.log(err)
+      }
+      
+      // axios
+      //   .post(
+      //     serverDomain+"/signup", // 미리 약속한 주소
+      //     { nickname:nickName.value, password:password.value }, // 서버가 필요로 하는 데이터를 넘겨주고,
+      //     { headers: {} } // 누가 요청했는 지 알려줍니다. (config에서 해요!)
+      //   )
+      //   .then(function (response) {
+      //     console.log(response);
+      //   })
+      //   .catch(function (error) {
+      //     console.log(error);
+      //   });
 
       return;
     } else {
