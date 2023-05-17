@@ -2,6 +2,8 @@ import { useState } from "react";
 import { styled } from "styled-components";
 import CreateModal from "../../feature/CreateStory/CreateModal";
 import CreateStory from "../../feature/CreateStory/CreateStory";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 function Body() {
   const [createStory, setCreateStory] = useState(false);
@@ -13,9 +15,19 @@ function Body() {
     setCreateStory(false);
   };
 
+  const fairytales = useSelector((state=>state.fairyTale))
+  
+
+
+  
+
+  console.log('fairytales??',fairytales)
+
   return (
     <StBodyBox>
       <StUl>
+
+        {/* 새 동화만들기 */}
         <StLi>
           <CreateBox onClick={showCreateStory}>새 동화 만들기</CreateBox>
           {createStory && (
@@ -28,20 +40,32 @@ function Body() {
             </CreateModal>
           )}
         </StLi>
+        {/*동화 리스트  */}
         <StLi>
-          <div>제목</div>
+          {fairytales.stories.map((item)=>{
+      
+            return(
+             <StLi key={item.storyId}>
+              <h3>{item.title}</h3>
+              <p>{item.user}</p>
+              <Link to ="/detail/:${item.StoryId}">
+                <button>자세히보기</button> 
+              </Link>
+        </StLi>
+          )
+          })}
+        </StLi> 
+
+        <StLi>
+          <div>어린왕자</div>
           <div>작성자</div>
         </StLi>
         <StLi>
-          <div>제목</div>
+          <div>콩쥐팥쥐</div>
           <div>작성자</div>
         </StLi>
         <StLi>
-          <div>제목</div>
-          <div>작성자</div>
-        </StLi>
-        <StLi>
-          <div>제목</div>
+          <div>아기돼지삼형제</div>
           <div>작성자</div>
         </StLi>
       </StUl>
@@ -53,14 +77,17 @@ export default Body;
 
 const StBodyBox = styled.div`
   margin: 5px;
-  border: 3px solid black;
+  border: 10px solid black;
   padding: 10px;
+  border-color: burlywood;
+  
 `;
 
 const StUl = styled.ul`
   list-style: none;
   padding: 0;
 
+  border: 5px;
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
@@ -72,8 +99,8 @@ const StUl = styled.ul`
 const StLi = styled.li`
   width: 22.25%;
   height: 150px;
-
-  border: 2px solid black;
+  border: 2px solid blue;
+ 
 `;
 
 const CreateBox = styled.div`
