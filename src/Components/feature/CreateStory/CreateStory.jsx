@@ -1,14 +1,48 @@
 import { styled } from "styled-components";
+import { addFairytale } from "../../../redux/modules/fairytale";
+import { useDispatch } from "react-redux";
+import React, { useState } from 'react';
 
 function CreateStory() {
-  return (
+
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+
+  const titleChangeHandler = (event) => {
+    setTitle(event.target.value);
+  };
+
+  const contentChangeHandler = (event) => {
+    setContent(event.target.value);
+  };
+
+
+
+
+  const dispatch = useDispatch();
+
+
+  const clickCreatstory = (event) =>{
+    event.preventDefault();
+    dispatch(addFairytale({
+      storyId: Date.now(),
+      title,
+      content,
+     
+    }));
+  };
+  console.log('title:::::',title)
+  console.log('content:::::',content)
+
+
+  return ( 
     <StInputContiner>
       <StInputBox>
-        제목 : <input type="text" />
-        첫문장 : <input type="text" />
+        제목 : <input type="text" value={title} onChange={titleChangeHandler}/>
+        첫문장 : <input type="text" value={content} onChange={contentChangeHandler} />
         표지 이미지 url: <input type="text" />
-        <button>저장</button>
-      </StInputBox>
+        <button onClick={clickCreatstory}>저장</button>
+      </StInputBox> 
       <StPreviewBox>이미지 미리 보기</StPreviewBox>
     </StInputContiner>
   );

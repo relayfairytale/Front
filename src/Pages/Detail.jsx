@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import Layout from "../Components/Layout/Layout";
 import { Link } from "react-router-dom";
 import { styled } from "styled-components";
+import WriterModal from "../Components/feature/WriterModal";
 
 function Detail() {
   const isFairyTaleComplet = true;
+
+  const [visible, setVisible] = useState(false);
+  const [writerContent, setWriterContent] =useState("");
 
   return (
     <Layout>
@@ -22,13 +26,19 @@ function Detail() {
           <div>눈을 보며 바느질을 하다가 바늘에 손가락이 찔려 피 세 방울을 눈 위로 떨어뜨렸습니다.</div>
           <div>하얀 눈 속에 있는 피가 너무 아름다워 보여서 왕비는 생각했습니다.</div>
           <div>'눈처럼 하얗고, 피처럼 붉고, 창틀의 나무처럼 까만 머리카락을 가진 아이가 내게 있었다면!' 얼마 지나지 않아 왕비는 딸을 가지게 되었습니다.</div>
+          <div>여기다가 밑으로 쭉쭉 추가되야함</div>
+          <div>{writerContent}</div>
         </div>
         <div>
-          <button>제가 한번 써볼게요</button>
+          <button onClick={()=>{setVisible(!visible);
+          }}
+          >
+            제가 한번 써볼게요
+          </button>
+          <hr/>
+          {visible && <WriterModal/>}
         </div>
-        <div>
-          입력 상자 등장!
-        </div>
+       
       </StContentsBox>
     </Layout>
   );
