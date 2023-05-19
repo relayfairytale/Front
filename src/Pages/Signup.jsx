@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import {AuthApi} from '../shared/Api'
+import { AuthApi } from "../shared/Api";
 
 // 닉네임 정규식
 const nicknameRegex = /^[A-Za-z0-9]{3,}$/;
@@ -14,8 +14,8 @@ const alertMessage = {
   nickErr: "닉네임 규칙에 어긋납니다! (영문과 숫자를 사용하여 3글자 이상)",
   pwErr: "비밀번호 규칙에 어긋납니다!!(4글자 이상)",
   pwMachErr: "패스워드가 불일치합니다.",
-  signinUpComplete:"회원가입에 성공했습니다.",
-  signinUpFail:"어라? 뭔가 문제가 생긴 것 같아요!"
+  signinUpComplete: "회원가입에 성공했습니다.",
+  signinUpFail: "어라? 뭔가 문제가 생긴 것 같아요!",
 };
 
 function Signup() {
@@ -61,7 +61,7 @@ function Signup() {
     const verifiedNickname = nicknameRegex.test(nickName.value);
     const verifiedPassword = passwordRegex.test(password.value);
     const verifiedConfirmPassword = password.value === confirmPassword.value;
-    
+
     setNickName((prevNickName) => ({
       ...prevNickName,
       err: !verifiedNickname,
@@ -80,20 +80,22 @@ function Signup() {
       ? false
       : true;
   };
-  const onSubmitHandler = async() => {
+  const onSubmitHandler = async () => {
     const signUpVerfy = verifySiginUpData();
-    if (signUpVerfy) {  // 회원 가입 요청 가능
+    if (signUpVerfy) {
+      // 회원 가입 요청 가능
 
       try {
-        const res = await AuthApi.signup({nickname:nickName.value, password:password.value})
+        const res = await AuthApi.signup({
+          nickname: nickName.value,
+          password: password.value,
+        });
         alert(res.data.message);
-
-        console.log(res)  
+        
       } catch (err) {
-        alert(alertMessage.signinUpFail)
-        console.log(err)
+        alert(err.response.data.errorMessage);
       }
-      
+
       // axios
       //   .post(
       //     serverDomain+"/signup", // 미리 약속한 주소
