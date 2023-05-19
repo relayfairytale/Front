@@ -36,13 +36,11 @@ function SignIn() {
           nickname: nickName.value,
           password: password.value,
         });
-        console.log(res);
-
+        
         const expirationDate = new Date();
         expirationDate.setTime(expirationDate.getTime() + 10 * 60 * 1000);
         document.cookie = `token=${res.data.token}; expires=${expirationDate.toUTCString()}; path=/`;
       } catch (err) {
-        console.log(err);
         alert(err.response.data.errorMessage);
       }
 
