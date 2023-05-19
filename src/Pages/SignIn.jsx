@@ -29,36 +29,40 @@ function SignIn() {
     }));
   };
 
-  const onSubmitHandler = async() => {
-  if(nickName.value && password.value) {
-    alert("로그인 !!")
+  const onSubmitHandler = async () => {
+    if (nickName.value && password.value) {
+      try {
+        const res = await AuthApi.signin({
+          nickname: nickName.value,
+          password: password.value,
+        });
+        console.log(res);
 
-    try {
-      const res = await AuthApi.signin({nickname:nickName.value, password:password.value})
-      console.log(res)  
-    } catch (err) {
-      console.log(err)
+        const expirationDate = new Date();
+        expirationDate.setTime(expirationDate.getTime() + 10 * 60 * 1000);
+        document.cookie = `token=${res.data.token}; expires=${expirationDate.toUTCString()}; path=/`;
+      } catch (err) {
+        console.log(err);
+        alert(err.response.data.errorMessage);
+      }
+
+      // axios
+      //     .post(
+      //       "http://miniproject.ap-northeast-2.elasticbeanstalk.com/signin", // 미리 약속한 주소
+      //       { nickname:nickName.value, password:password.value }, // 서버가 필요로 하는 데이터를 넘겨주고,
+      //       { headers: {} } // 누가 요청했는 지 알려줍니다. (config에서 해요!)
+      //     )
+      //     .then(function (response) {
+      //       console.log(response);
+      //     })
+      //     .catch(function (error) {
+      //       console.log(error);
+      //     });
+    } else {
+      alert("닉네임 또는 비밀번호가 입력되지 않았습니다.");
+      return;
     }
-
-    // axios
-    //     .post(
-    //       "http://miniproject.ap-northeast-2.elasticbeanstalk.com/signin", // 미리 약속한 주소
-    //       { nickname:nickName.value, password:password.value }, // 서버가 필요로 하는 데이터를 넘겨주고,
-    //       { headers: {} } // 누가 요청했는 지 알려줍니다. (config에서 해요!)
-    //     )
-    //     .then(function (response) {
-    //       console.log(response);
-    //     })
-    //     .catch(function (error) {
-    //       console.log(error);
-    //     });
-  } else {
-    alert("닉네임 또는 비밀번호가 입력되지 않았습니다.")
-    return;
-  }
-
-    
-  }
+  };
   return (
     <StContiner>
       <h1>로그인</h1>
@@ -77,7 +81,9 @@ function SignIn() {
         onChange={onPasswordChangeHandler}
       />
       <div>
-        <StBtn type="submit" onClick={onSubmitHandler}>로그인</StBtn>
+        <StBtn type="submit" onClick={onSubmitHandler}>
+          로그인
+        </StBtn>
         <Link to={"/signup"}>
           <StBtn type="button">회원가입</StBtn>
         </Link>
