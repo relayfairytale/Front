@@ -5,14 +5,17 @@ import {AuthApi} from '../shared/Api'
 
 // 닉네임 정규식
 const nicknameRegex = /^[A-Za-z0-9]{3,}$/;
+
 // 비밀번호 정규식
 const passwordRegex = /^.{4,}$/;
+
 // 오류 메세지
 const alertMessage = {
   nickErr: "닉네임 규칙에 어긋납니다! (영문과 숫자를 사용하여 3글자 이상)",
   pwErr: "비밀번호 규칙에 어긋납니다!!(4글자 이상)",
   pwMachErr: "패스워드가 불일치합니다.",
   signinUpComplete:"회원가입에 성공했습니다.",
+  signinUpFail:"어라? 뭔가 문제가 생긴 것 같아요!"
 };
 
 function Signup() {
@@ -87,6 +90,7 @@ function Signup() {
 
         console.log(res)  
       } catch (err) {
+        alert(alertMessage.signinUpFail)
         console.log(err)
       }
       
