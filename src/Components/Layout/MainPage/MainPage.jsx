@@ -3,7 +3,7 @@ import { styled } from "styled-components";
 import CreateModal from "../../feature/CreateStory/CreateModal";
 import CreateStory from "../../feature/CreateStory/CreateStory";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link} from "react-router-dom";
 
 function Body() {
   const [createStory, setCreateStory] = useState(false);
@@ -15,10 +15,8 @@ function Body() {
     setCreateStory(false);
   };
 
-  const fairytales = useSelector((state=>state.fairyTale))
-  
-
-
+  const fairytales = useSelector((state=>state.fairyTale));
+ 
   
 
   console.log('fairytales??',fairytales)
@@ -36,25 +34,28 @@ function Body() {
               close={hideCreateStory}
               header="새로운 이야기를 만들어 보세요!"
             >
-              <CreateStory />
+              <CreateStory
+              open={createStory}
+              close={hideCreateStory} 
+              />
             </CreateModal>
           )}
         </StLi>
         {/*동화 리스트  */}
-        <StLi>
+        
           {fairytales.stories.map((item)=>{
       
             return(
              <StLi key={item.storyId}>
               <h3>{item.title}</h3>
               <p>{item.user}</p>
-              <Link to ="/detail/:${item.StoryId}">
+              <Link to ={`/detail/${item.storyId}`} key={item.storyId}>
                 <button>자세히보기</button> 
               </Link>
-        </StLi>
+            </StLi>
           )
           })}
-        </StLi> 
+       
 
         <StLi>
           <div>어린왕자</div>

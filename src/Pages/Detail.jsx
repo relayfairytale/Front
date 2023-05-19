@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import Layout from "../Components/Layout/Layout";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { styled } from "styled-components";
 import WriterModal from "../Components/feature/WriterModal";
+import { useSelector } from "react-redux";
 
 function Detail() {
   const isFairyTaleComplet = true;
@@ -10,6 +11,22 @@ function Detail() {
   const [visible, setVisible] = useState(false);
   const [writerContent, setWriterContent] =useState("");
 
+  // const fairytaleStore = useSelector((state) => state.fairyTale)
+  // const param = useParams();
+  // const store = fairytaleStore.stories.find((item) => item.storyId === param.id); 
+
+  const fairytaleStore = useSelector((state) => state.fairyTale);
+  
+ 
+const {storyId} = useParams();
+  
+ console.log('fairytaleStore',fairytaleStore)
+const store = fairytaleStore.stories.find((item) => item.storyId === parseInt(storyId));
+
+
+  console.log('store??????????',store)
+  
+  
   return (
     <Layout>
       <StHederLine>
@@ -19,7 +36,7 @@ function Detail() {
         {isFairyTaleComplet ? <StCompletBox>완결</StCompletBox> : null}
       </StHederLine>
       <StContentsBox>
-        <StH2>제목 : 백설공주 </StH2>
+        <StH2>{store.title} </StH2>
         <div>
           <div>옛날 옛적 한겨울에, 하늘에서 눈송이가 깃털처럼 내리고 있었습니다.</div>
           <div>그때 어느 왕비가 흑단 나무로 만든 창틀에 앉아 바느질을 하고 있었습니다.</div>
@@ -28,6 +45,7 @@ function Detail() {
           <div>'눈처럼 하얗고, 피처럼 붉고, 창틀의 나무처럼 까만 머리카락을 가진 아이가 내게 있었다면!' 얼마 지나지 않아 왕비는 딸을 가지게 되었습니다.</div>
           <div>여기다가 밑으로 쭉쭉 추가되야함</div>
           <div>{writerContent}</div>
+          <img src={store.imageUrl} alt="Story" />
         </div>
         <div>
           <button onClick={()=>{setVisible(!visible);
