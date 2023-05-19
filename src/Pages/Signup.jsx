@@ -12,6 +12,7 @@ const alertMessage = {
   nickErr: "닉네임 규칙에 어긋납니다! (영문과 숫자를 사용하여 3글자 이상)",
   pwErr: "비밀번호 규칙에 어긋납니다!!(4글자 이상)",
   pwMachErr: "패스워드가 불일치합니다.",
+  signinUpComplete:"회원가입에 성공했습니다.",
 };
 
 function Signup() {
@@ -82,6 +83,8 @@ function Signup() {
 
       try {
         const res = await AuthApi.signup({nickname:nickName.value, password:password.value})
+        alert(res.data.message);
+
         console.log(res)  
       } catch (err) {
         console.log(err)
