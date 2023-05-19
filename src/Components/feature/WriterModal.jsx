@@ -11,15 +11,7 @@ function WriterModal() {
   }
 
 
-  const WriterBox = styled.div`
-    align-items: center;
-  `
-
-  const WriterInputBox = styled.input`
-    width: 900px;
-    height: 80px;
-    margin: 25px;
-  `
+  
   return (
     
     <WriterBox>
@@ -29,6 +21,16 @@ function WriterModal() {
    
   )
 }
+
+const WriterBox = styled.div`
+    align-items: center;
+  `
+
+const WriterInputBox = styled.input`
+  width: 900px;
+  height: 80px;
+  margin: 25px;
+  `
 
 
 

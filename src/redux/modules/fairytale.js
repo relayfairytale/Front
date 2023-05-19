@@ -36,30 +36,21 @@ nickname: "진영"
 
 
 
+
 const fairyTaleSlice = createSlice({
   name: "fairyTale",
   initialState,
   reducers: {
 
     //메인페이지 책추가
-    addFairytale : (state,action) => {
+    addFairytale : (state,action) => void state.stories.push({
+      title: action.payload.title,
+      content : action.payload.content,
+      imageUrl: action.payload.imageUrl,
 
-
-      const newFairytale ={
-        storyId: Date.now(),
-        user: action.user,
-        title: action.title,
-        content : action.content,
-      }
-      
-
-      state.stories.push(newFairytale);
-      return state
-
-
-      
-    }
-
+      //백엔드연결후 지우기
+      storyId: Date.now(),
+    })
     //
 
    
