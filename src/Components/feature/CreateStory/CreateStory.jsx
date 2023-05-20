@@ -19,14 +19,7 @@ function CreateStory(props) {
     setContent(event.target.value);
   };
 
-
-
-
   const dispatch = useDispatch();
-
-  
-
-
 
   const clickCreatstory = (event) =>{
     event.preventDefault();
@@ -35,7 +28,7 @@ function CreateStory(props) {
       title,
       content,
       imageUrl: imgFile,
-     
+      User:{nickname:"jin"}
     }));    
     close();
   };

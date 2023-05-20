@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { styled } from "styled-components";
+import styled from "styled-components";
 import CreateModal from "../../feature/CreateStory/CreateModal";
 import CreateStory from "../../feature/CreateStory/CreateStory";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function Body() {
+  const navigate = useNavigate();
   const [createStory, setCreateStory] = useState(false);
   const showCreateStory = () => {
     setCreateStory(true);
@@ -15,9 +16,10 @@ function Body() {
     setCreateStory(false);
   };
 
+  const goToDetailPage = (id) => {
+    navigate(`/detail/${id}`);
+  };
   const fairytales = useSelector((state) => state.fairyTale);
-
-  console.log("fairytales??", fairytales);
 
   return (
     <StBodyBox>
@@ -36,70 +38,20 @@ function Body() {
           )}
         </StLi>
         {/*동화 리스트  */}
-
-    
-          {fairytales.stories.map((item) => {
-            return (
-              
-              <StLi key={item.storyId} style={{ backgroundImage: `url(${item.imageUrl})` }}>
-               <Link to={`/detail/${item.storyId}`} key={item.storyId}>
-                <div>
-                <h3>{item.title}</h3>
-                <p>{item.user}</p>
-                </div>
-                </Link> 
-              </StLi> 
-              
-            );
-          })}
-     
-
-     {fairytales.stories.map((item) => {
+        {fairytales.stories.map((item) => {
           return (
-            <StLi key={item.storyId}>
-              <Link to={`/detail/${item.storyId}`} key={item.storyId}>
-                <div style={{ backgroundImage: `url(${item.imageUrl})` }}></div>
-              </Link>
-              <div>
-                <h3>{item.title}</h3>
-                <p>{item.user}</p>
-              </div>
+            <StLi
+              key={item.storyId}
+              onClick={() => goToDetailPage(item.storyId)}
+            >
+              <div style={{height:'10%'}}>{item.title}</div>
+              <StImgBox
+                style={{ backgroundImage: `url(${item.imageUrl})` }}
+              ></StImgBox>
+              <div style={{height:'10%'}}>{item.User.nickname}</div>
             </StLi>
           );
         })}
-
-
-{fairytales.stories.map((item) => {
-        return (
-          <StLi key={item.storyId}>
-            <Link to={`/detail/${item.storyId}`} key={item.storyId}>
-              <div
-                style={{ backgroundImage: `url(${item.imageUrl})` }}
-                onClick={() => {
-                  // handle click logic here if needed
-                }}
-              ></div>
-            </Link>
-            <div>
-              <h3>{item.title}</h3>
-              <p>{item.user}</p>
-            </div>
-          </StLi>
-        );
-      })}
-
-        <StLi>
-          <div>어린왕자</div>
-          <div>작성자</div>
-        </StLi>
-        <StLi>
-          <div>콩쥐팥쥐</div>
-          <div>작성자</div>
-        </StLi>
-        <StLi>
-          <div>아기돼지삼형제</div>
-          <div>작성자</div>
-        </StLi>
       </StUl>
     </StBodyBox>
   );
@@ -129,11 +81,19 @@ const StUl = styled.ul`
 
 const StLi = styled.li`
   width: 22.25%;
-  height: 150px;
+  height: 260px;
   border: 2px solid blue;
+  background-size: cover;
+  background-position: center;
+  cursor: pointer;
 `;
 
-
+const StImgBox = styled.div`
+  background-size: cover;
+  background-position: center;
+  width: 100%;
+  height: 80%;
+`;
 const CreateBox = styled.div`
   width: 100%;
   height: 100%;
