@@ -37,9 +37,13 @@ function SignIn() {
           password: password.value,
         });
         
+        console.log(res);
+
+        const thisdata = res.headers.get('authorization')
+        console.log(thisdata);
         const expirationDate = new Date();
         expirationDate.setTime(expirationDate.getTime() + 10 * 60 * 1000);
-        document.cookie = `token=${res.data.token}; expires=${expirationDate.toUTCString()}; path=/`;
+        // document.cookie = `authorization=Bearer ${res.data.token}; expires=${expirationDate.toUTCString()}; path=/`;
       } catch (err) {
         alert(err.response.data.errorMessage);
       }

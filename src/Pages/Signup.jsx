@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { AuthApi } from "../shared/Api";
 
@@ -18,7 +18,9 @@ const alertMessage = {
   signinUpFail: "어라? 뭔가 문제가 생긴 것 같아요!",
 };
 
+
 function Signup() {
+  const navigate = useNavigate();
   const [nickName, setNickName] = useState({
     value: "",
     err: null,
@@ -91,7 +93,7 @@ function Signup() {
           password: password.value,
         });
         alert(res.data.message);
-        
+        navigate("/")
       } catch (err) {
         alert(err.response.data.errorMessage);
       }
