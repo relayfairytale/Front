@@ -3,7 +3,7 @@ import { styled } from "styled-components";
 import CreateModal from "../../feature/CreateStory/CreateModal";
 import CreateStory from "../../feature/CreateStory/CreateStory";
 import { useSelector } from "react-redux";
-import { Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function Body() {
   const [createStory, setCreateStory] = useState(false);
@@ -15,16 +15,13 @@ function Body() {
     setCreateStory(false);
   };
 
-  const fairytales = useSelector((state=>state.fairyTale));
- 
-  
+  const fairytales = useSelector((state) => state.fairyTale);
 
-  console.log('fairytales??',fairytales)
+  console.log("fairytales??", fairytales);
 
   return (
     <StBodyBox>
       <StUl>
-
         {/* 새 동화만들기 */}
         <StLi>
           <CreateBox onClick={showCreateStory}>새 동화 만들기</CreateBox>
@@ -34,28 +31,62 @@ function Body() {
               close={hideCreateStory}
               header="새로운 이야기를 만들어 보세요!"
             >
-              <CreateStory
-              open={createStory}
-              close={hideCreateStory} 
-              />
+              <CreateStory open={createStory} close={hideCreateStory} />
             </CreateModal>
           )}
         </StLi>
         {/*동화 리스트  */}
-        
-          {fairytales.stories.map((item)=>{
-      
-            return(
-             <StLi key={item.storyId}>
+
+    
+          {fairytales.stories.map((item) => {
+            return (
+              
+              <StLi key={item.storyId} style={{ backgroundImage: `url(${item.imageUrl})` }}>
+               <Link to={`/detail/${item.storyId}`} key={item.storyId}>
+                <div>
+                <h3>{item.title}</h3>
+                <p>{item.user}</p>
+                </div>
+                </Link> 
+              </StLi> 
+              
+            );
+          })}
+     
+
+     {fairytales.stories.map((item) => {
+          return (
+            <StLi key={item.storyId}>
+              <Link to={`/detail/${item.storyId}`} key={item.storyId}>
+                <div style={{ backgroundImage: `url(${item.imageUrl})` }}></div>
+              </Link>
+              <div>
+                <h3>{item.title}</h3>
+                <p>{item.user}</p>
+              </div>
+            </StLi>
+          );
+        })}
+
+
+{fairytales.stories.map((item) => {
+        return (
+          <StLi key={item.storyId}>
+            <Link to={`/detail/${item.storyId}`} key={item.storyId}>
+              <div
+                style={{ backgroundImage: `url(${item.imageUrl})` }}
+                onClick={() => {
+                  // handle click logic here if needed
+                }}
+              ></div>
+            </Link>
+            <div>
               <h3>{item.title}</h3>
               <p>{item.user}</p>
-              <Link to ={`/detail/${item.storyId}`} key={item.storyId}>
-                <button>자세히보기</button> 
-              </Link>
-            </StLi>
-          )
-          })}
-       
+            </div>
+          </StLi>
+        );
+      })}
 
         <StLi>
           <div>어린왕자</div>
@@ -81,7 +112,6 @@ const StBodyBox = styled.div`
   border: 10px solid black;
   padding: 10px;
   border-color: burlywood;
-  
 `;
 
 const StUl = styled.ul`
@@ -101,8 +131,8 @@ const StLi = styled.li`
   width: 22.25%;
   height: 150px;
   border: 2px solid blue;
- 
 `;
+
 
 const CreateBox = styled.div`
   width: 100%;
