@@ -43,7 +43,7 @@ function SignIn() {
         const thisdata = res.headers.get("authorization");
         console.log(thisdata);
         const expirationDate = new Date();
-        expirationDate.setTime(expirationDate.getTime() + 10 * 60 * 1000);
+        expirationDate.setTime(expirationDate.getTime() + 24 * 60 * 60 * 1000);
         document.cookie = `authorization=Bearer ${
           res.data.token
         }; expires=${expirationDate.toUTCString()}; path=/`;
