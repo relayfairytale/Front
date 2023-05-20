@@ -3,6 +3,22 @@ import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { AuthApi } from "../shared/Api";
 
+// 토큰 디코드
+const parseJwt = (token) => {
+  var base64Url = token.split(".")[1];
+  var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+  var jsonPayload = decodeURIComponent(
+    atob(base64)
+      .split("")
+      .map(function (c) {
+        return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+      })
+      .join("")
+  );
+
+  return JSON.parse(jsonPayload);
+};
+
 function SignIn() {
   const navigate = useNavigate();
   const [nickName, setNickName] = useState({
@@ -38,15 +54,18 @@ function SignIn() {
           password: password.value,
         });
 
-        console.log(res);
-
-        const thisdata = res.headers.get("authorization");
-        console.log(thisdata);
         const expirationDate = new Date();
         expirationDate.setTime(expirationDate.getTime() + 24 * 60 * 60 * 1000);
         document.cookie = `authorization=Bearer ${
           res.data.token
         }; expires=${expirationDate.toUTCString()}; path=/`;
+
+        // 세선 스토리지에 닉네임 저장
+        sessionStorage.setItem(
+          "nickname",
+          JSON.stringify(parseJwt(res.data.token).nickname)
+        );
+        sessionStorage.setItem("isSignIn", JSON.stringify(true));
         alert("로그인에 성공했습니다.");
         navigate("/");
       } catch (err) {
