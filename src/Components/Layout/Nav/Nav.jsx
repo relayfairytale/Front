@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { styled } from "styled-components";
@@ -7,22 +6,27 @@ function Nav() {
   // const nick = JSON.parse(sessionStorage.getItem("nickname"));
   // const isSignIn = JSON.parse(sessionStorage.getItem("isSignIn"));
 
-  const [nick, setNick] = useState(JSON.parse(sessionStorage.getItem("nickname")));
-  const [isSignIn, setIsSignIn] = useState(JSON.parse(sessionStorage.getItem("isSignIn")))
+  const [nick, setNick] = useState(
+    JSON.parse(sessionStorage.getItem("nickname"))
+  );
+  const [isSignIn, setIsSignIn] = useState(
+    JSON.parse(sessionStorage.getItem("isSignIn"))
+  );
   const signOutHandler = () => {
     sessionStorage.removeItem("nickname");
     sessionStorage.removeItem("isSignIn");
     let date = new Date();
     document.cookie =
-    'authorization' + "= " + "; expires=" + date.toUTCString() + "; path=/";
-    alert("로그아웃 했습니다.")
-    setNick('')
-    setIsSignIn('')
+      "authorization" + "= " + "; expires=" + date.toUTCString() + "; path=/";
+    alert("로그아웃 했습니다.");
+    setNick("");
+    setIsSignIn("");
   };
 
   const onSignIn = (
     <>
-      <div>{nick}님 안녕하세요!</div> <button onClick={signOutHandler}>로그아웃</button>
+      <div>{nick}님 안녕하세요!</div>{" "}
+      <button onClick={signOutHandler}>로그아웃</button>
     </>
   );
   const offSignIn = (
