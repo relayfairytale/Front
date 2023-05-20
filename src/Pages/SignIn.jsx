@@ -113,12 +113,13 @@ const StContiner = styled.div`
 
 const StBtn = styled.button`
   margin: 10px;
-  background-color: ${(props) => props.backgroundcolor}; //#7fb1bf;
+  background-color: ${(props) => props.backgroundcolor}; 
   position: relative;
   border: 0;
   padding: 15px 25px;
   display: inline-block;
   text-align: center;
   color: white;
+  border-radius: 10px;
   &:active {background-color:white; color:black}
 `;
