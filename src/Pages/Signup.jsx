@@ -150,9 +150,9 @@ function Signup() {
         onChange={onConfirmPasswordChangeHandler}
       />
       <div>
-        <StBtn onClick={onSubmitHandler}>회원가입</StBtn>
+        <StBtn backgroundcolor="#7fccde" onClick={onSubmitHandler}>회원가입</StBtn>
         <Link to={"/"}>
-          <StBtn>취소</StBtn>
+          <StBtn backgroundcolor="#fa5a5a">취소</StBtn>
         </Link>
       </div>
     </StSignupContainer>
@@ -170,8 +170,17 @@ const StSignupContainer = styled.div`
   border: 3px solid black;
 `;
 const StBtn = styled.button`
-  margin: 5px;
+  margin: 10px;
+  background-color: ${(props) => props.backgroundcolor}; //#7fb1bf;
+  position: relative;
+  border: 0;
+  padding: 15px 25px;
+  display: inline-block;
+  text-align: center;
+  color: white;
+  &:active {background-color:white; color:black}
 `;
+
 const StAlertBox = styled.div`
   color: tomato;
   font-weight: bold;

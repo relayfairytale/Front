@@ -43,7 +43,7 @@ function SignIn() {
         console.log(thisdata);
         const expirationDate = new Date();
         expirationDate.setTime(expirationDate.getTime() + 10 * 60 * 1000);
-        // document.cookie = `authorization=Bearer ${res.data.token}; expires=${expirationDate.toUTCString()}; path=/`;
+        document.cookie = `authorization=Bearer ${res.data.token}; expires=${expirationDate.toUTCString()}; path=/`;
       } catch (err) {
         alert(err.response.data.errorMessage);
       }
@@ -83,14 +83,14 @@ function SignIn() {
         onChange={onPasswordChangeHandler}
       />
       <div>
-        <StBtn type="submit" onClick={onSubmitHandler}>
+        <StBtn backgroundcolor="#6698cb" type="submit" onClick={onSubmitHandler}>
           로그인
         </StBtn>
         <Link to={"/signup"}>
-          <StBtn type="button">회원가입</StBtn>
+          <StBtn backgroundcolor="#7fccde" type="button">회원가입</StBtn>
         </Link>
         <Link to={"/"}>
-          <StBtn type="button">뒤로가기</StBtn>
+          <StBtn backgroundcolor="#82c8a0" type="button">뒤로가기</StBtn>
         </Link>
       </div>
     </StContiner>
@@ -112,5 +112,13 @@ const StContiner = styled.div`
 `;
 
 const StBtn = styled.button`
-  margin: 5px;
+  margin: 10px;
+  background-color: ${(props) => props.backgroundcolor}; //#7fb1bf;
+  position: relative;
+  border: 0;
+  padding: 15px 25px;
+  display: inline-block;
+  text-align: center;
+  color: white;
+  &:active {background-color:white; color:black}
 `;
