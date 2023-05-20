@@ -2,11 +2,11 @@ import { styled } from "styled-components";
 import { addFairytale } from "../../../redux/modules/fairytale";
 import { useDispatch } from "react-redux";
 import React, { useState } from 'react';
-import { useRef } from "react";
+
 
 function CreateStory(props) {
 
-  const { open, close } = props;
+  const { close } = props;
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -48,20 +48,16 @@ function CreateStory(props) {
 
   //이미지 파일
 
-  const [imgFile, setImgFile] = useState("");
-const imgRef = useRef();
-
-// 이미지 업로드 input의 onChange
-const saveImgFile = () => {
-	const file = imgRef.current.files[0];
-	const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onloadend = () => {
-        setImgFile(reader.result);
-   	};
-};
+const [imgFile, setImgFile] = useState("");
 
 console.log(imgFile)
+
+
+const handleImageUrlChange = (event) => {
+    
+   
+  setImgFile(event.target.value);
+    };
 
 
   return ( 
@@ -70,21 +66,12 @@ console.log(imgFile)
         제목 : <input type="text" value={title} onChange={titleChangeHandler}/>
         첫문장 : <input type="text" value={content} onChange={contentChangeHandler} />
         표지 이미지 url: 
-        <input
-          //컴퓨터에 있는 파일 선택가능
-          type="file"
-          //모든타입의 이미지파일 허용,서버로 업로드 할 수 있는 파일의 타입
-          accept="image/*"
-          id="profileImg"
-          onChange={saveImgFile}
-          ref={imgRef}
+        <input type="text" value={imgFile} onChange={handleImageUrlChange}
         />
         <button onClick={clickCreatstory}  >저장</button>
       </StInputBox> 
-      <StPreviewBox><img
-      src={imgFile ? imgFile :`/images/icon/user.png`}
-      alt="이미지 미리보기"
-      />
+      <StPreviewBox>
+        {<img src={imgFile} alt="이미지 미리보기" />}
     </StPreviewBox>
     </StInputContiner>
   );

@@ -9,13 +9,15 @@ function Detail() {
   const isFairyTaleComplet = true;
 
   const [visible, setVisible] = useState(false);
-  const [writerContent, setWriterContent] =useState("");
+ 
 
   // const fairytaleStore = useSelector((state) => state.fairyTale)
   // const param = useParams();
   // const store = fairytaleStore.stories.find((item) => item.storyId === param.id); 
 
   const fairytaleStore = useSelector((state) => state.fairyTale);
+  const fairytales = useSelector((state=>state.fairyTale));
+
   
  
 const {storyId} = useParams();
@@ -38,14 +40,17 @@ const store = fairytaleStore.stories.find((item) => item.storyId === parseInt(st
       <StContentsBox>
         <StH2>{store.title} </StH2>
         <div>
-          <div>옛날 옛적 한겨울에, 하늘에서 눈송이가 깃털처럼 내리고 있었습니다.</div>
-          <div>그때 어느 왕비가 흑단 나무로 만든 창틀에 앉아 바느질을 하고 있었습니다.</div>
-          <div>눈을 보며 바느질을 하다가 바늘에 손가락이 찔려 피 세 방울을 눈 위로 떨어뜨렸습니다.</div>
-          <div>하얀 눈 속에 있는 피가 너무 아름다워 보여서 왕비는 생각했습니다.</div>
-          <div>'눈처럼 하얗고, 피처럼 붉고, 창틀의 나무처럼 까만 머리카락을 가진 아이가 내게 있었다면!' 얼마 지나지 않아 왕비는 딸을 가지게 되었습니다.</div>
-          <div>여기다가 밑으로 쭉쭉 추가되야함</div>
-          <div>{writerContent}</div>
-          <img src={store.imageUrl} alt="Story" />
+          <div>여기 밑에부터</div>
+          <div>{store.content}</div>
+          <div>{store.relaymention}</div>
+          {fairytales.stories.map((item)=>{ 
+            return(
+              <div key={item.storyId}>
+              <h3>{item.relaymention}</h3>  
+              </div>
+              )
+              })}
+
         </div>
         <div>
           <button onClick={()=>{setVisible(!visible);

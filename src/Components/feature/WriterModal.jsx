@@ -1,22 +1,34 @@
 import React from 'react'
 import { useState } from 'react'
 import { styled } from 'styled-components';
-
+import { addRelay } from '../../redux/modules/fairytale';
+import { useDispatch } from "react-redux";
 
 function WriterModal() {
-  const [writerContent,setWriterContent] =useState("");
+  const [relaymention,setRelaymention] =useState("");
 
   const onchangeWriterContent = (event) =>{
-    setWriterContent(event.target.value);
+    setRelaymention(event.target.value);
   }
 
+  const dispatch = useDispatch();
+  
+  const clickRelay = (event) =>{
+    event.preventDefault();
+    dispatch(addRelay({
+      storyId: Date.now(),
+      relaymention,
+     
+    }));    
+    
+  };
 
   
   return (
     
     <WriterBox>
-      <WriterInputBox type="text" value={writerContent} onchange={onchangeWriterContent}></WriterInputBox>
-      <button>저장</button>     
+      <WriterInputBox type="text" value={relaymention} onChange={onchangeWriterContent}></WriterInputBox>
+      <button onClick={clickRelay}>저장</button>     
     </WriterBox>
    
   )
