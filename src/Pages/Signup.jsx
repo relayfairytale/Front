@@ -18,7 +18,6 @@ const alertMessage = {
   signinUpFail: "어라? 뭔가 문제가 생긴 것 같아요!",
 };
 
-
 function Signup() {
   const navigate = useNavigate();
   const [nickName, setNickName] = useState({
@@ -93,7 +92,7 @@ function Signup() {
           password: password.value,
         });
         alert(res.data.message);
-        navigate("/")
+        navigate("/");
       } catch (err) {
         alert(err.response.data.errorMessage);
       }
@@ -150,7 +149,9 @@ function Signup() {
         onChange={onConfirmPasswordChangeHandler}
       />
       <div>
-        <StBtn backgroundcolor="#7fccde" onClick={onSubmitHandler}>회원가입</StBtn>
+        <StBtn backgroundcolor="#7fccde" onClick={onSubmitHandler}>
+          회원가입
+        </StBtn>
         <Link to={"/"}>
           <StBtn backgroundcolor="#fa5a5a">취소</StBtn>
         </Link>
@@ -171,7 +172,7 @@ const StSignupContainer = styled.div`
 `;
 const StBtn = styled.button`
   margin: 10px;
-  background-color: ${(props) => props.backgroundcolor}; 
+  background-color: ${(props) => props.backgroundcolor};
   position: relative;
   border: 0;
   padding: 15px 25px;
@@ -179,7 +180,10 @@ const StBtn = styled.button`
   text-align: center;
   color: white;
   border-radius: 10px;
-  &:active {background-color:white; color:black}
+  &:active {
+    background-color: white;
+    color: black;
+  }
 `;
 
 const StAlertBox = styled.div`
