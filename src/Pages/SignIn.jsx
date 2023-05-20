@@ -46,7 +46,8 @@ function SignIn() {
     }));
   };
 
-  const onSubmitHandler = async () => {
+  const onSubmitHandler = async (e) => {
+    e.preventDefault();
     if (nickName.value && password.value) {
       try {
         const res = await AuthApi.signin({
@@ -90,7 +91,7 @@ function SignIn() {
     }
   };
   return (
-    <StContiner>
+    <StContiner onSubmit={onSubmitHandler}>
       <h1>로그인</h1>
       <label>Nickname</label>
       <input
@@ -110,7 +111,6 @@ function SignIn() {
         <StBtn
           backgroundcolor="#6698cb"
           type="submit"
-          onClick={onSubmitHandler}
         >
           로그인
         </StBtn>
@@ -130,7 +130,7 @@ function SignIn() {
 }
 export default SignIn;
 
-const StContiner = styled.div`
+const StContiner = styled.form`
   max-width: 1200px;
   margin: 15px auto;
   padding: 20px;
