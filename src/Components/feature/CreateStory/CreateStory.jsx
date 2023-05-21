@@ -1,78 +1,97 @@
 import { styled } from "styled-components";
 import { addFairytale } from "../../../redux/modules/fairytale";
 import { useDispatch } from "react-redux";
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import { AuthApi } from "../../../shared/Api";
+import { useCookies } from "react-cookie";
 
-
-function CreateStory(props) {
-
-  const { close } = props;
-
+function CreateStory({ close, setPosts, posts }) {
+  const dispatch = useDispatch();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [imageURL, setImagURL] = useState("");
+  const [post, setPost] = useState({
+    title: "",
+    content: "",
+    imageURL: "",
+  });
 
-  const titleChangeHandler = (event) => {
-    setTitle(event.target.value);
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleImageUrlChange = (event) => setImagURL(event.target.value);
+
+  const [cookies] = useCookies(["Authorization"]);
+  console.log(cookies);
+
+  const newStory = {
+    config: { Headers: { cookies } },
+    Body: {
+      title: post.title,
+      content: post.content,
+      imageURL: post.imageURL,
+    },
   };
 
-  const contentChangeHandler = (event) => {
-    setContent(event.target.value);
-  };
-
-
-
-
-  const dispatch = useDispatch();
-
-  
-
-
-
-  const clickCreatstory = (event) =>{
+  console.log("new???", newStory);
+  const onSubmitPostHandler = async (event) => {
     event.preventDefault();
-    dispatch(addFairytale({
-      storyId: Date.now(),
-      title,
-      content,
-      imageUrl: imgFile,
-     
-    }));    
-    close();
+
+    const res = await AuthApi.postStories(newStory);
+    console.log(res);
+    // if (res.data.ok) {
+    //   dispatch(addFairytale(newStory));
+    // }
+    /**
+     * 1. axios --> server에 데이터 보내기
+     *    토큰이 필요한 요청: header --> Authorization: token (getCookie // 토큰 꺼내는법)
+     *    AuthApi.postStories(<-- new story-->)
+     *
+     * 2. response --> 200 / ok / ture
+     * 3. dispatch(addFairytale)
+     *
+     */
+
+    // try {
+    //   setIsLoading(true);
+    //   const res = await AuthApi.postStories(newStory);
+    //   setPosts([...posts, res]);
+    // } catch (error) {
+    //   // Error가 발생한다면, Alert를 띄움
+    //   alert("Error가 발생했습니다.");
+    //   setError(error);
+    // } finally {
+    //   // 요청이 실패를 해도, 성공을 해도 실행되는 부분.
+    //   // 로딩상태를 false로 변경해준다.
+    //   setIsLoading(false);
+    // }
   };
 
+  // Input 상태관리
+  const onChangeInputHandler = (event) => {
+    const { name, value } = event.target;
+    setPost({
+      ...post,
+      [name]: value,
+    });
+  };
 
-
-  console.log('title:::::',title)
-  console.log('content:::::',content)
-
-
-  //이미지 파일
-
-const [imgFile, setImgFile] = useState("");
-
-console.log(imgFile)
-
-
-const handleImageUrlChange = (event) => {
-    
-   
-  setImgFile(event.target.value);
-    };
-
-
-  return ( 
+  return (
     <StInputContiner>
       <StInputBox>
-        제목 : <input type="text" value={title} onChange={titleChangeHandler}/>
-        첫문장 : <input type="text" value={content} onChange={contentChangeHandler} />
-        표지 이미지 url: 
-        <input type="text" value={imgFile} onChange={handleImageUrlChange}
-        />
-        <button onClick={clickCreatstory}  >저장</button>
-      </StInputBox> 
+        제목 :{" "}
+        <input type="text" name="title" onChange={onChangeInputHandler} />
+        첫문장 :{" "}
+        <input type="text" name="content" onChange={onChangeInputHandler} />
+        표지 이미지 url:
+        <input type="text" name="imageURL" onChange={handleImageUrlChange} />
+        <button onClick={onSubmitPostHandler}>
+          {isLoading ? "저장중" : "저장"}
+        </button>
+      </StInputBox>
       <StPreviewBox>
-        {<img src={imgFile} alt="이미지 미리보기" />}
-    </StPreviewBox>
+        {<img src={imageURL} alt="이미지 미리보기" />}
+      </StPreviewBox>
     </StInputContiner>
   );
 }
@@ -92,7 +111,6 @@ const StInputBox = styled.div`
   gap: 20px;
 `;
 
-
 //이미지 미리보기
 const StPreviewBox = styled.div`
   margin: 10px;
@@ -105,5 +123,4 @@ const StPreviewBox = styled.div`
     height: 100%;
     object-fit: contain;
   }
-
-`
+`;

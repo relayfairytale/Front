@@ -1,23 +1,44 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { styled } from "styled-components";
 import CreateModal from "../../feature/CreateStory/CreateModal";
 import CreateStory from "../../feature/CreateStory/CreateStory";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { AuthApi } from "../../../shared/Api";
 
 function Body() {
+  const navigate = useNavigate();
   const [createStory, setCreateStory] = useState(false);
+  const [getStoriesData, setGetStoriesData] = useState([]);
+  //클릭시 동화 작성 모달
   const showCreateStory = () => {
     setCreateStory(true);
   };
-
+  //
   const hideCreateStory = () => {
     setCreateStory(false);
   };
 
-  const fairytales = useSelector((state) => state.fairyTale);
+  const goToDetailPage = (id) => {
+    navigate(`/detail/${id}`);
+  };
 
-  console.log("fairytales??", fairytales);
+  const fairyTales = useSelector((state) => state.fairyTale);
+
+  const getStories = async () => {
+    try {
+      const res = await AuthApi.getStories();
+      setGetStoriesData(res.data.stories);
+    } catch (error) {
+      console.log(error);
+    } finally {
+    }
+  };
+
+  // useEffect를 이용해서 posts를 Fetching 합니다.
+  useEffect(() => {
+    getStories();
+  }, []);
 
   return (
     <StBodyBox>
@@ -36,70 +57,20 @@ function Body() {
           )}
         </StLi>
         {/*동화 리스트  */}
-
-    
-          {fairytales.stories.map((item) => {
-            return (
-              
-              <StLi key={item.storyId} style={{ backgroundImage: `url(${item.imageUrl})` }}>
-               <Link to={`/detail/${item.storyId}`} key={item.storyId}>
-                <div>
-                <h3>{item.title}</h3>
-                <p>{item.user}</p>
-                </div>
-                </Link> 
-              </StLi> 
-              
-            );
-          })}
-     
-
-     {fairytales.stories.map((item) => {
+        {getStoriesData?.map((item) => {
           return (
-            <StLi key={item.storyId}>
-              <Link to={`/detail/${item.storyId}`} key={item.storyId}>
-                <div style={{ backgroundImage: `url(${item.imageUrl})` }}></div>
-              </Link>
-              <div>
-                <h3>{item.title}</h3>
-                <p>{item.user}</p>
-              </div>
+            <StLi
+              key={item.storyId}
+              onClick={() => goToDetailPage(item.storyId)}
+            >
+              <div style={{ height: "10%" }}>{item.title}</div>
+              <StImgBox
+                style={{ backgroundImage: `url(${item.imageURL})` }}
+              ></StImgBox>
+              <div style={{ height: "10%" }}>{item.User.nickname}</div>
             </StLi>
           );
         })}
-
-
-{fairytales.stories.map((item) => {
-        return (
-          <StLi key={item.storyId}>
-            <Link to={`/detail/${item.storyId}`} key={item.storyId}>
-              <div
-                style={{ backgroundImage: `url(${item.imageUrl})` }}
-                onClick={() => {
-                  // handle click logic here if needed
-                }}
-              ></div>
-            </Link>
-            <div>
-              <h3>{item.title}</h3>
-              <p>{item.user}</p>
-            </div>
-          </StLi>
-        );
-      })}
-
-        <StLi>
-          <div>어린왕자</div>
-          <div>작성자</div>
-        </StLi>
-        <StLi>
-          <div>콩쥐팥쥐</div>
-          <div>작성자</div>
-        </StLi>
-        <StLi>
-          <div>아기돼지삼형제</div>
-          <div>작성자</div>
-        </StLi>
       </StUl>
     </StBodyBox>
   );
@@ -117,7 +88,6 @@ const StBodyBox = styled.div`
 const StUl = styled.ul`
   list-style: none;
   padding: 0;
-
   border: 5px;
   display: flex;
   flex-wrap: wrap;
@@ -128,14 +98,25 @@ const StUl = styled.ul`
 `;
 
 const StLi = styled.li`
-  width: 22.25%;
-  height: 150px;
+  width: 17.3%;
+  height: 260px;
   border: 2px solid blue;
+  background-size: cover;
+  background-position: center;
+  cursor: pointer;
 `;
 
-
+const StImgBox = styled.div`
+  background-size: cover;
+  background-position: center;
+  width: 100%;
+  height: 80%;
+`;
 const CreateBox = styled.div`
   width: 100%;
   height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
 `;
