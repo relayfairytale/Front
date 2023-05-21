@@ -3,8 +3,6 @@ import Header from "./Header/Header";
 
 function Layout({ children }) {
 
-  console.log(document.cookie);
-
   return (
     <StLayoutBox>
       <Header />
