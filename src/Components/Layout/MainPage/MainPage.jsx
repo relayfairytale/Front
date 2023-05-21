@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { styled } from "styled-components";
 import CreateModal from "../../feature/CreateStory/CreateModal";
 import CreateStory from "../../feature/CreateStory/CreateStory";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { AuthApi } from "../../../shared/Api";
 
@@ -22,8 +21,6 @@ function Body() {
   const goToDetailPage = (id) => {
     navigate(`/detail/${id}`);
   };
-
-  const fairyTales = useSelector((state) => state.fairyTale);
 
   const getStories = async () => {
     try {
@@ -98,7 +95,7 @@ const StUl = styled.ul`
 `;
 
 const StLi = styled.li`
-  width: 17.3%;
+  width: 17.2%;
   height: 260px;
   border: 2px solid blue;
   background-size: cover;
