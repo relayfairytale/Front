@@ -20,7 +20,7 @@ export const AuthApi = {
   editStories: (payload) => api.put("/stories/:storyId", payload),
   delStories: (payload) => api.delete("/stories/:storyId", payload),
   // 동화 세부 정보 조회 및 작성
-  showDetailStories: (payload) => api.get("/stories/:storyId", payload),
+  showDetailStories: (payload) => api.get(`/stories/${payload}`),
   postRelayStories: (payload) => api.post("/stories/:storyId/relay", payload),
   // 작성중 여부 체크
   isWritingCheak: (payload) =>
