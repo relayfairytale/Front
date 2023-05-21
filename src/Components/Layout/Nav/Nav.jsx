@@ -18,6 +18,7 @@ function Nav() {
     let date = new Date();
     document.cookie =
       "authorization" + "= " + "; expires=" + date.toUTCString() + "; path=/";
+    sessionStorage.clear();
     alert("로그아웃 했습니다.");
     setNick("");
     setIsSignIn("");
