@@ -32,7 +32,6 @@ function Signup() {
     value: "",
     err: null,
   });
-
   const onNickNameChangeHandler = (event) => {
     const inputNickName = event.target.value;
     setNickName((prevNickName) => ({
