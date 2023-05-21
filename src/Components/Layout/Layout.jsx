@@ -2,7 +2,6 @@ import { styled } from "styled-components";
 import Header from "./Header/Header";
 
 function Layout({ children }) {
-
   return (
     <StLayoutBox>
       <Header />

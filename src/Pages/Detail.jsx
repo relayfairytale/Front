@@ -1,34 +1,51 @@
+import { useEffect } from "react";
 import React, { useState } from "react";
 import Layout from "../Components/Layout/Layout";
 import { Link, useParams } from "react-router-dom";
 import { styled } from "styled-components";
 import WriterModal from "../Components/feature/WriterModal";
 import { useSelector } from "react-redux";
+import { AuthApi } from "../shared/Api";
 
 function Detail() {
+  //동화 세부 정보
+  const [showStoriesData, setshowStoriesData] = useState([]);
   const isFairyTaleComplet = true;
 
+  //제가 써볼께요 버튼활성화
   const [visible, setVisible] = useState(false);
- 
 
   // const fairytaleStore = useSelector((state) => state.fairyTale)
   // const param = useParams();
-  // const store = fairytaleStore.stories.find((item) => item.storyId === param.id); 
+  // const store = fairytaleStore.stories.find((item) => item.storyId === param.id);
 
-  const fairytaleStore = useSelector((state) => state.fairyTale);
-  const fairytales = useSelector((state=>state.fairyTale));
+  const fairyTaleStore = useSelector((state) => state.fairyTale);
 
-  
- 
-const {storyId} = useParams();
-  
- console.log('fairytaleStore',fairytaleStore)
-const store = fairytaleStore.stories.find((item) => item.storyId === parseInt(storyId));
+  const { storyId } = useParams();
 
+  console.log("fairytaleStore", fairyTaleStore);
+  const store = fairyTaleStore.stories.find(
+    (item) => item.storyId === parseInt(storyId)
+  );
 
-  console.log('store??????????',store)
-  
-  
+  console.log("store??????????", store);
+
+  // 동화 세부 정보조회
+  const showDetailStories = async () => {
+    try {
+      const res = await AuthApi.showDetailStories();
+      setshowStoriesData(res.data.stories);
+    } catch (error) {
+      console.log(error);
+    } finally {
+    }
+  };
+
+  // useEffect를 이용해서 posts를 Fetching 합니다.
+  useEffect(() => {
+    showDetailStories();
+  }, []);
+
   return (
     <Layout>
       <StHederLine>
@@ -38,30 +55,30 @@ const store = fairytaleStore.stories.find((item) => item.storyId === parseInt(st
         {isFairyTaleComplet ? <StCompletBox>완결</StCompletBox> : null}
       </StHederLine>
       <StContentsBox>
-        <StH2>{store.title} </StH2>
+        <StH2>{showStoriesData.title} </StH2>
         <div>
           <div>여기 밑에부터</div>
-          <div>{store.content}</div>
-          <div>{store.relaymention}</div>
-          {fairytales.stories.map((item)=>{ 
-            return(
+          <div>{showStoriesData.content}</div>
+          {/* <div>{store.relaymention}</div> */}
+          {showStoriesData.map((item) => {
+            return (
               <div key={item.storyId}>
-              <h3>{item.relaymention}</h3>  
+                <h3>{item.relaymention}</h3>
               </div>
-              )
-              })}
-
+            );
+          })}
         </div>
         <div>
-          <button onClick={()=>{setVisible(!visible);
-          }}
+          <button
+            onClick={() => {
+              setVisible(!visible);
+            }}
           >
             제가 한번 써볼게요
           </button>
-          <hr/>
-          {visible && <WriterModal/>}
+          <hr />
+          {visible && <WriterModal />}
         </div>
-       
       </StContentsBox>
     </Layout>
   );
