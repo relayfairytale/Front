@@ -3,8 +3,9 @@ import axios from "axios";
 // 싱글톤 패턴으로 axios 인스터스를 생성
 export const api = axios.create({
   baseURL: process.env.REACT_APP_BACKEND_SERVER_URL,
-
-  headers: {},
+  headers: {
+    /* */
+  },
   withCredentials: true,
 });
 
@@ -13,7 +14,7 @@ export const AuthApi = {
   signup: (payload) => api.post("/signup", payload),
   signin: (payload) => api.post("/signin", payload),
   // 동화 작성 조회
-  postStories: (payload) => api.post("/stories", payload.Body, payload.Headers),
+  postStories: (data, config) => api.post("/stories", data, config),
   getStories: (payload) => api.get("/stories", payload),
   // 동화 수정 삭제
   editStories: (payload) => api.put("/stories/:storyId", payload),

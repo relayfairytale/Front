@@ -7,8 +7,6 @@ import { useCookies } from "react-cookie";
 
 function CreateStory({ close, setPosts, posts }) {
   const dispatch = useDispatch();
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
   const [imageURL, setImagURL] = useState("");
   const [post, setPost] = useState({
     title: "",
@@ -21,30 +19,35 @@ function CreateStory({ close, setPosts, posts }) {
 
   const handleImageUrlChange = (event) => setImagURL(event.target.value);
 
-  const [cookies] = useCookies(["Authorization"]);
-  console.log(cookies);
+  const [cookies] = useCookies(["authorization"]);
 
   const newStory = {
-    config: { Headers: { cookies } },
-    Body: {
-      title: post.title,
-      content: post.content,
-      imageURL: post.imageURL,
+    title: post.title,
+    content: post.content,
+    imageURL: post.imageURL,
+  };
+  const config = {
+    headers: {
+      // 쿠키를 헤더에 추가
+      authorization: cookies.authorization,
     },
   };
 
-  console.log("new???", newStory);
   const onSubmitPostHandler = async (event) => {
     event.preventDefault();
-
-    const res = await AuthApi.postStories(newStory);
-    console.log(res);
+    try {
+      const res = await AuthApi.postStories(newStory, config.headers);
+      console.log(res);
+    } catch (err) {
+      alert(err.response.data.errorMessage);
+      console.log(err);
+    }
     // if (res.data.ok) {
     //   dispatch(addFairytale(newStory));
     // }
     /**
      * 1. axios --> server에 데이터 보내기
-     *    토큰이 필요한 요청: header --> Authorization: token (getCookie // 토큰 꺼내는법)
+     *    토큰이 필요한 요청: header --> authorization: token (getCookie // 토큰 꺼내는법)
      *    AuthApi.postStories(<-- new story-->)
      *
      * 2. response --> 200 / ok / ture

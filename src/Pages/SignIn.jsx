@@ -60,7 +60,7 @@ function SignIn() {
         document.cookie = `authorization=Bearer ${
           res.data.token
         }; expires=${expirationDate.toUTCString()}; path=/`;
-
+        
         // 세선 스토리지에 닉네임 저장
         sessionStorage.setItem(
           "nickname",
