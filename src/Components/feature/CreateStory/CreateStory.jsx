@@ -36,7 +36,7 @@ function CreateStory({ close, setPosts, posts }) {
   const onSubmitPostHandler = async (event) => {
     event.preventDefault();
     try {
-      const res = await AuthApi.postStories(newStory, config.headers);
+      const res = await AuthApi.postStories(newStory, config);
       console.log(res);
     } catch (err) {
       alert(err.response.data.errorMessage);
