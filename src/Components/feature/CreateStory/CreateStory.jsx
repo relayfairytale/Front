@@ -17,7 +17,7 @@ function CreateStory({ close, setPosts, posts }) {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleImageUrlChange = (event) => setImagURL(event.target.value);
+  // const handleImageUrlChange = (event) => setImagURL(event.target.value);
 
   const [cookies] = useCookies(["authorization"]);
 
@@ -87,13 +87,13 @@ function CreateStory({ close, setPosts, posts }) {
         첫문장 :{" "}
         <input type="text" name="content" onChange={onChangeInputHandler} />
         표지 이미지 url:
-        <input type="text" name="imageURL" onChange={handleImageUrlChange} />
+        <input type="text" name="imageURL" onChange={onChangeInputHandler} />
         <button onClick={onSubmitPostHandler}>
           {isLoading ? "저장중" : "저장"}
         </button>
       </StInputBox>
       <StPreviewBox>
-        {<img src={imageURL} alt="이미지 미리보기" />}
+        {<img src={post.imageURL} alt="이미지 미리보기" />}
       </StPreviewBox>
     </StInputContiner>
   );

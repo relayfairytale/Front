@@ -61,9 +61,7 @@ function Body() {
               onClick={() => goToDetailPage(item.storyId)}
             >
               <div style={{ height: "10%" }}>{item.title}</div>
-              <StImgBox
-                style={{ backgroundImage: `url(${item.imageURL})` }}
-              ></StImgBox>
+              <StImgBox imageUrl={item.imageURL}></StImgBox>
               <div style={{ height: "10%" }}>{item.User.nickname}</div>
             </StLi>
           );
@@ -104,6 +102,7 @@ const StLi = styled.li`
 `;
 
 const StImgBox = styled.div`
+  background-image: url(${props => props.imageUrl});
   background-size: cover;
   background-position: center;
   width: 100%;
