@@ -1,50 +1,61 @@
-import React from 'react'
-import { useState } from 'react'
-import { styled } from 'styled-components';
-import { addRelay } from '../../redux/modules/fairytale';
-import { useDispatch } from "react-redux";
+import React from "react";
+import { useState } from "react";
+import { styled } from "styled-components";
+import { AuthApi } from "../../shared/Api";
+import { useCookies } from "react-cookie";
 
 function WriterModal() {
-  const [relaymention,setRelaymention] =useState("");
+  const [cookies] = useCookies(["authorization"]);
+  const [relayContent, setRelayContent] = useState({
+    content: "",
+  });
 
-  const onchangeWriterContent = (event) =>{
-    setRelaymention(event.target.value);
-  }
-
-  const dispatch = useDispatch();
-  
-  const clickRelay = (event) =>{
-    event.preventDefault();
-    dispatch(addRelay({
-      storyId: Date.now(),
-      relaymention,
-     
-    }));    
-    
+  const newRelay = {
+    content: relayContent.content,
   };
 
-  
+  const config = {
+    headers: {
+      // 쿠키를 헤더에 추가
+      authorization: cookies.authorization,
+    },
+  };
+
+  const onSubmitRelayHandler = async (event) => {
+    event.preventDefault();
+    try {
+      const res = await AuthApi.postRelayStories(newRelay, config);
+      console.log(res);
+    } catch (err) {
+      alert(err.response.data.errorMessage);
+      console.log(err);
+    }
+  };
+  console.log("config??????", config);
+  console.log("newRelay?????????", newRelay);
+
   return (
-    
-    <WriterBox>
-      <WriterInputBox type="text" value={relaymention} onChange={onchangeWriterContent}></WriterInputBox>
-      <button onClick={clickRelay}>저장</button>     
+    <WriterBox onSubmit={onSubmitRelayHandler}>
+      <WriterInputBox
+        type="text"
+        onChange={(event) => {
+          const { value } = event.target;
+          setRelayContent({ ...relayContent, content: value });
+        }}
+      ></WriterInputBox>
+      <button type="submit">저장</button>
     </WriterBox>
-   
-  )
+  );
 }
 
-const WriterBox = styled.div`
-    align-items: center;
-  `
+const WriterBox = styled.form`
+  align-items: center;
+`;
 
 const WriterInputBox = styled.input`
   width: 900px;
   height: 80px;
   margin: 25px;
-  `
-
-
+`;
 
 export default WriterModal;
-
