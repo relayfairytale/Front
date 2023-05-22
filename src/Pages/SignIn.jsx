@@ -56,10 +56,9 @@ function SignIn() {
         });
 
         const expirationDate = new Date();
+        const setCookie = `Bearer ${res.data.token}`
         expirationDate.setTime(expirationDate.getTime() + 24 * 60 * 60 * 1000);
-        document.cookie = `authorization=Bearer%20${
-          res.data.token
-        }; expires=${expirationDate.toUTCString()}; path=/`;
+        document.cookie = `authorization=${encodeURIComponent(setCookie)}; expires=${expirationDate.toUTCString()}; path=/`;
         
         // 세선 스토리지에 닉네임 저장
         sessionStorage.setItem(
