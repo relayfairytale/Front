@@ -25,16 +25,13 @@ function WriterModal({ storyId, setTrigger }) {
     event.preventDefault();
     try {
       const res = await AuthApi.postRelayStories(newRelay, config, storyId);
-      console.log(res);
       setTrigger((prev) => !prev);
+      alert(res.data.message);
+      setRelayContent("")
     } catch (err) {
       alert(err.response.data.errorMessage);
-      console.log(err);
     }
   };
-  console.log("config??????", config);
-  console.log("newRelay?????????", newRelay);
-
   return (
     <WriterBox onSubmit={onSubmitRelayHandler}>
       <WriterInputBox
