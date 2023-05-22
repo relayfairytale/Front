@@ -36,6 +36,7 @@ function WriterModal({ storyId, setTrigger }) {
     <WriterBox onSubmit={onSubmitRelayHandler}>
       <WriterInputBox
         type="text"
+        value={relayContent.content}
         onChange={(event) => {
           const { value } = event.target;
           setRelayContent({ ...relayContent, content: value });
