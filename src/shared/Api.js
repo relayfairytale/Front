@@ -28,7 +28,7 @@ export const AuthApi = {
   signup: (payload) => api.post("/signup", payload),
   signin: (payload) => api.post("/signin", payload),
   // 동화 작성 조회
-  postStories: (data, config) => {api.post("/stories", data, {...config})},
+  postStories: (data, config) => api.post("/stories", data, {...config}),
   getStories: (payload) => api.get("/stories", payload),
   // 동화 수정 삭제
   editStories: (payload) => api.put("/stories/:storyId", payload),

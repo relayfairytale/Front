@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { styled } from "styled-components";
+import styled from "styled-components";
 import CreateModal from "../../feature/CreateStory/CreateModal";
 import CreateStory from "../../feature/CreateStory/CreateStory";
 import { useNavigate } from "react-router-dom";
@@ -9,6 +9,8 @@ function Body() {
   const navigate = useNavigate();
   const [createStory, setCreateStory] = useState(false);
   const [getStoriesData, setGetStoriesData] = useState([]);
+  const [renderTrigger, setRenderTrigger] = useState(false)
+
   //클릭시 동화 작성 모달
   const showCreateStory = () => {
     setCreateStory(true);
@@ -26,16 +28,15 @@ function Body() {
     try {
       const res = await AuthApi.getStories();
       setGetStoriesData(res.data.stories);
-    } catch (error) {
-      console.log(error);
-    } finally {
+    } catch (err) {
+      alert(err.response.data.errorMessage);
     }
   };
 
   // useEffect를 이용해서 posts를 Fetching 합니다.
   useEffect(() => {
     getStories();
-  }, []);
+  }, [renderTrigger]);
 
   return (
     <StBodyBox>
@@ -49,7 +50,7 @@ function Body() {
               close={hideCreateStory}
               header="새로운 이야기를 만들어 보세요!"
             >
-              <CreateStory open={createStory} close={hideCreateStory} />
+              <CreateStory open={createStory} close={hideCreateStory} setRenderTrigger={setRenderTrigger}/>
             </CreateModal>
           )}
         </StLi>
