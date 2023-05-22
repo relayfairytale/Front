@@ -4,7 +4,7 @@ import { styled } from "styled-components";
 import { AuthApi } from "../../shared/Api";
 import { useCookies } from "react-cookie";
 
-function WriterModal() {
+function WriterModal({ storyId, setTrigger }) {
   const [cookies] = useCookies(["authorization"]);
   const [relayContent, setRelayContent] = useState({
     content: "",
@@ -24,8 +24,9 @@ function WriterModal() {
   const onSubmitRelayHandler = async (event) => {
     event.preventDefault();
     try {
-      const res = await AuthApi.postRelayStories(newRelay, config);
+      const res = await AuthApi.postRelayStories(newRelay, config, storyId);
       console.log(res);
+      setTrigger((prev) => !prev);
     } catch (err) {
       alert(err.response.data.errorMessage);
       console.log(err);

@@ -28,14 +28,15 @@ export const AuthApi = {
   signup: (payload) => api.post("/signup", payload),
   signin: (payload) => api.post("/signin", payload),
   // 동화 작성 조회
-  postStories: (data, config) => api.post("/stories", data, {...config}),
+  postStories: (data, config) => api.post("/stories", data, { ...config }),
   getStories: (payload) => api.get("/stories", payload),
   // 동화 수정 삭제
   editStories: (payload) => api.put("/stories/:storyId", payload),
   delStories: (payload) => api.delete("/stories/:storyId", payload),
   // 동화 세부 정보 조회 및 작성
   showDetailStories: (payload) => api.get(`/stories/${payload}`),
-  postRelayStories: (payload) => api.post("/stories/:storyId/relay", payload),
+  postRelayStories: (data, config, storyId) =>
+    api.post(`/stories/${storyId}/relay`, data, { ...config }),
   // 작성중 여부 체크
   isWritingCheak: (payload) =>
     api.post("/stories/:storyId/relay/isWriting", payload),
