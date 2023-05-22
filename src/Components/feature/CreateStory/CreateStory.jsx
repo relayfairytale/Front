@@ -1,12 +1,10 @@
 import { styled } from "styled-components";
-import { addFairytale } from "../../../redux/modules/fairytale";
-import { useDispatch } from "react-redux";
 import React, { useState } from "react";
 import { AuthApi } from "../../../shared/Api";
 import { useCookies } from "react-cookie";
 
 function CreateStory({close, setRenderTrigger}) {
-  const dispatch = useDispatch();
+
   const [post, setPost] = useState({
     title: "",
     content: "",
