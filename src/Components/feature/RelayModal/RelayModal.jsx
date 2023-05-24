@@ -1,9 +1,8 @@
 import React from "react";
 import { AuthApi } from "../../../shared/Api";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { useEffect, useState } from "react";
-import HeartButton from "./HeartButton";
 
 function RelayModal(props) {
   const { storyId } = useParams();
