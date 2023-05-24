@@ -4,6 +4,7 @@ import { Link, useParams } from "react-router-dom";
 import { styled } from "styled-components";
 import WriterModal from "../Components/feature/WriterModal";
 import { AuthApi } from "../shared/Api";
+import RelayModal from "../Components/feature/RelayModal/RelayModal";
 
 function Detail() {
   //동화 세부 정보
@@ -12,19 +13,25 @@ function Detail() {
   const isFairyTaleComplet = true;
   //제가 써볼께요 버튼활성화
   const [visible, setVisible] = useState(false);
+  // 릴레이 상세보기 id
+  const [modalVisibleId, setModalVisibleId] = useState(0);
 
   const { storyId } = useParams();
 
-  // 동화 세부 정보조회
+  // 동화 Detail 페이지에서 조회
   const showDetailStories = async () => {
     try {
       const res = await AuthApi.showDetailStories(storyId);
 
       setShowStoriesData(res.data.story);
-      // console.log("res data", res.data);
+      console.log("res data", res.data);
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const onClickModal = (id) => {
+    setModalVisibleId(id);
   };
 
   // useEffect를 이용해서 상세보기posts를 Fetching 합니다.
@@ -44,11 +51,24 @@ function Detail() {
         <StH2>{showStoriesData.title} </StH2>
         <div>
           <div>{showStoriesData.content}</div>
-          {/* <div>{store.relaymention}</div> */}
           {showStoriesData.Relays?.map((item) => {
             return (
-              <div key={item.relayId}>
+              <div
+                key={item.relayId}
+                onClick={() => {
+                  onClickModal(item.relayId);
+                }}
+              >
                 <p>{item.content}</p>
+                {item.relayId === modalVisibleId && (
+                  <RelayModal
+                    id={item.relayId}
+                    relayId={item.relayId}
+                    setTrigger={setTrigger}
+                    modalVisibleId={modalVisibleId}
+                    setModalVisibleId={setModalVisibleId}
+                  />
+                )}
               </div>
             );
           })}

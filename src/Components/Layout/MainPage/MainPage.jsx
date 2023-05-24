@@ -9,7 +9,7 @@ function Body() {
   const navigate = useNavigate();
   const [createStory, setCreateStory] = useState(false);
   const [getStoriesData, setGetStoriesData] = useState([]);
-  const [renderTrigger, setRenderTrigger] = useState(false)
+  const [renderTrigger, setRenderTrigger] = useState(false);
 
   //클릭시 동화 작성 모달
   const showCreateStory = () => {
@@ -50,7 +50,11 @@ function Body() {
               close={hideCreateStory}
               header="새로운 이야기를 만들어 보세요!"
             >
-              <CreateStory open={createStory} close={hideCreateStory} setRenderTrigger={setRenderTrigger}/>
+              <CreateStory
+                open={createStory}
+                close={hideCreateStory}
+                setRenderTrigger={setRenderTrigger}
+              />
             </CreateModal>
           )}
         </StLi>
@@ -78,7 +82,7 @@ const StBodyBox = styled.div`
   margin: 5px;
   border: 10px solid black;
   padding: 10px;
-  border-color: burlywood;
+  border-color: white;
 `;
 
 const StUl = styled.ul`
@@ -96,14 +100,14 @@ const StUl = styled.ul`
 const StLi = styled.li`
   width: 17.2%;
   height: 260px;
-  border: 2px solid blue;
+  border: 2px solid black;
   background-size: cover;
   background-position: center;
   cursor: pointer;
 `;
 
 const StImgBox = styled.div`
-  background-image: url(${props => props.imageUrl});
+  background-image: url(${(props) => props.imageUrl});
   background-size: cover;
   background-position: center;
   width: 100%;

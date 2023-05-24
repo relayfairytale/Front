@@ -17,4 +17,5 @@ const StLayoutBox = styled.div`
   min-width: 800px;
   border: 3px solid black;
   margin: 0 auto;
+  background-image: url();
 `;

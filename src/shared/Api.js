@@ -41,12 +41,14 @@ export const AuthApi = {
   isWritingCheak: (payload) =>
     api.post("/stories/:storyId/relay/isWriting", payload),
   // 문장 세부 정보
-  showRelay: (payload) => api.get("/stories/:storyId/relay/relayId", payload),
+  showRelay: (storyId, relayId, config) =>
+    api.get(`/stories/${storyId}/relay/${relayId}`, { ...config }),
   // 문장 수정 삭제
-  editRelay: (payload) => api.put("/stories/:storyId/relay/relayId", payload),
-  delRelay: (payload) => api.delete("/stories/:storyId/relay/relayId", payload),
+  editRelay: (payload) => api.put("/stories/:storyId/relay/:relayId", payload),
+  delRelay: (payload) =>
+    api.delete("/stories/:storyId/relay/:relayId", payload),
   // 좋아요 표시
   likeStories: (payload) => api.put("/stories/:storyId/like", payload),
-  likeRelay: (payload) =>
-    api.put("/stories/:storyId/relay/relayId/like", payload),
+  likeRelay: (storyId, relayId, config) =>
+    api.put(`/stories/${storyId}/relay/${relayId}/like`, {}, { ...config }),
 };

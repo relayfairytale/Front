@@ -27,7 +27,7 @@ function WriterModal({ storyId, setTrigger }) {
       const res = await AuthApi.postRelayStories(newRelay, config, storyId);
       setTrigger((prev) => !prev);
       alert(res.data.message);
-      setRelayContent({ ...relayContent, content: ""})
+      setRelayContent({ ...relayContent, content: "" });
     } catch (err) {
       alert(err.response.data.errorMessage);
     }
